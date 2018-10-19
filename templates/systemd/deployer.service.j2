@@ -1,0 +1,11 @@
+[Unit]
+Description={{ systemd_service_name }}
+
+[Service]
+User=root
+WorkingDirectory=/root
+ExecStart=/bin/bash -c 'thin-deployer --configuration=/usr/local/etc/encryption-deployer.yml --listen={{deployer_listen}} --port={{deployer_listen_port}}'
+ExecStop=/bin/bash -c 'killall thin-deployer'
+
+[Install]
+WantedBy=multi-user.target

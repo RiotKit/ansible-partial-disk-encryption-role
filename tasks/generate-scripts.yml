@@ -1,0 +1,10 @@
+- name: Generate scripts
+  become: yes
+  template:
+      src: "./usr/local/bin/{{ item.src }}"
+      dest: "/usr/local/bin/{{ item.dest }}"
+      mode: +x
+  with_items:
+      - { src: 'tc-create-volume.sh', dest: 'tc-create-volume.sh' }
+      - { src: 'tc-mount-volume.sh', dest: 'tc-mount-volume.sh' }
+      - { src: 'tcmount-xxx.sh.j2', dest: "tcmount-{{ enc_mount_name }}.sh" }

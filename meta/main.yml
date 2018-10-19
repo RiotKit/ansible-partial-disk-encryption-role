@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Krzysztof Wesołowski
+  description: Disk encryption using TrueCrypt (tcplay)
+  company: IWA-AIT.org / ZSP (non-profit organization)
+  license: MIT
+  min_ansible_version: 1.2
+
+  galaxy_tags:
+    - filesystem
+    - encryption
+    - truecrypt
+    - veracrypt
+    - tcplay
+
+dependencies: []

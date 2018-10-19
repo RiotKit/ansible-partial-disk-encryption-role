@@ -1,0 +1,11 @@
+- name: Install required packages
+  become: yes
+  apt:
+      update_cache: yes
+      name: "{{ item }}"
+      state: present
+  with_items:
+      - tcplay
+      - expect
+      - util-linux
+      - python3-pip

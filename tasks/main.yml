@@ -1,0 +1,20 @@
+- name: Install dependencies
+  include: dependencies.yml
+
+- name: Identify if the storage was already created
+  stat: path="{{ enc_file }}"
+  register: storage_file
+
+- name: Generate scripts
+  include: generate-scripts.yml
+
+- name: Create a new volume if it was not created yet
+  include: create.yml
+  when: enc_filesystem_create_if_not_exists == True and storage_file.stat.exists == False
+
+- name: Mount the volume
+  include: mount.yml
+
+- name: Setup thin-deployer
+  include: setup-deployer.yml
+  when: deployer_token != ''

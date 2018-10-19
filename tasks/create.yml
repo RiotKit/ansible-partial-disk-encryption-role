@@ -1,0 +1,17 @@
+- name: Allocate disk space for a file
+  become: yes
+  shell: "fallocate -l {{ enc_file_size }} {{ enc_file }}"
+
+- name: Find a free loopback device
+  become: yes
+  shell: "losetup -f | sed -r 's/^.{5}//'"
+  register: loopback
+
+- name: Create a loopback device
+  become: yes
+  shell: "losetup '{{ loopback.stdout }}' '{{ enc_file }}'"
+
+- name: Create an encrypted volume
+  become: yes
+  no_log: True
+  shell: "time /usr/local/bin/tc-create-volume.sh '-d /dev/{{ loopback.stdout }} -g -a {{ hashing_algorithm }} -b {{ encryption_algorithm }}' '{{ enc_passphrase }}' '{{ enc_hidden_volume_passphrase }}' '{{ enc_hidden_volume_size }}'"

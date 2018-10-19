@@ -1,0 +1,14 @@
+- name: Mount a volume first time with the secret passphrase (with filesystem formatting)
+  become: yes
+  no_log: True
+  shell: "/usr/local/bin/tcmount-{{ enc_mount_name }}.sh '{{ enc_hidden_volume_passphrase }}' --format"
+  vars:
+      ansible_ssh_pipelining: no
+  when: storage_file.stat.exists == False
+
+- name: Mount a volume usually with the secret passphrase
+  become: yes
+  no_log: True
+  shell: "/usr/local/bin/tcmount-{{ enc_mount_name }}.sh '{{ enc_hidden_volume_passphrase }}'"
+  when: storage_file.stat.exists == True
+

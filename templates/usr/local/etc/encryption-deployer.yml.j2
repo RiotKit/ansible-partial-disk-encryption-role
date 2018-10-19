@@ -1,0 +1,28 @@
+volume_mount:
+    vars:
+        enc_token: ''
+
+    # keep your token strong, it's very important!
+    token: "{{ deployer_token }}"
+
+    # slack/mattermost notifications
+    use_notification: {% if slack_or_mattermost_webhook_url %}true{% else %}false{% endif %}
+
+    notification_webhook_url: "{{ slack_or_mattermost_webhook_url }}"
+
+    pwd: /
+    request_regexp: ""
+
+    # commands to execute, each is executed in a separate subshell, no variables passing is possible
+    commands:
+        - /usr/local/bin/tcmount-{{ enc_mount_name }}.sh '%enc_token%'
+
+who_is_online:
+    vars: {}
+    token: "{{ deployer_token }}"
+    use_notification: false
+    notification_webhook_url: ""
+    pwd: /
+    request_regexp: ""
+    commands:
+        - w

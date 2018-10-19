@@ -1,0 +1,31 @@
+- name: Install via python pip
+  become: yes
+  pip:
+      name: Thin-Deployer
+      executable: pip3
+
+- name: Generate thin-deployer configuration
+  become: yes
+  template:
+      src: usr/local/etc/encryption-deployer.yml.j2
+      dest: /usr/local/etc/encryption-deployer.yml
+      owner: root
+      group: root
+      mode: 0640
+
+- name: "Copy '{{ systemd_service_name }}' systemd service"
+  become: yes
+  template:
+      src: "systemd/deployer.service.j2"
+      dest: "/etc/systemd/system/{{ systemd_service_name }}.service"
+      owner: root
+      group: root
+      mode: 0640
+
+- name: "Enable '{{ systemd_service_name }}' at system startup"
+  become: yes
+  systemd:
+      state: restarted
+      name: "{{ systemd_service_name }}"
+      daemon_reload: yes
+      enabled: yes
