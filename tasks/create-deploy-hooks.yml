@@ -1,0 +1,22 @@
+- name: Create a directory for hooks
+  become: yes
+  file:
+      path: "/usr/local/server-secure-storage/{{ enc_mount_name }}/hooks.d/{{ item }}"
+      state: directory
+  with_items:
+      - pre_mount
+      - post_mount
+      - pre_unmount
+      - post_unmount
+
+- name: Adding hooks
+  become: yes
+  template:
+      src: "usr/local/server-secure-storage/hooks.d/{{ item }}/001_default.sh"
+      dest: "/usr/local/server-secure-storage/{{ enc_mount_name }}/hooks.d/{{ item }}/001_default.sh"
+      mode: +x
+  with_items:
+      - pre_mount
+      - post_mount
+      - pre_unmount
+      - post_unmount

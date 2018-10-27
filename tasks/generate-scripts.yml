@@ -1,3 +1,10 @@
+- name: Copy shared bash code
+  become: yes
+  template:
+      src: "./usr/local/lib/server-secure-storage.sh"
+      dest: "/usr/local/lib/server-secure-storage.sh"
+      mode: +x
+
 - name: Generate scripts
   become: yes
   template:
@@ -8,3 +15,4 @@
       - { src: 'tc-create-volume.sh', dest: 'tc-create-volume.sh' }
       - { src: 'tc-mount-volume.sh', dest: 'tc-mount-volume.sh' }
       - { src: 'tcmount-xxx.sh.j2', dest: "tcmount-{{ enc_mount_name }}.sh" }
+      - { src: 'tcunmount-xxx.sh.j2', dest: "tcunmount-{{ enc_mount_name }}.sh" }

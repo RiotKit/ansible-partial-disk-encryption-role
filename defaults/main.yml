@@ -1,8 +1,10 @@
 enc_file: /.do-not-delete                  # path, where all of the data will be stored
 enc_file_size: 400M                        # examples: 256M, 20G, 500G
 enc_mount_name: storage                    # mount name, should be a-z, lower case, without special letters
+enc_mount_path: /mnt/storage
 enc_file_filesystem: ext4                  # any filesystem supported by mkfs (and supported by the operating system)
 enc_filesystem_create_if_not_exists: true
+hide_sensitive_output: true
 
 # passwords, change them
 enc_passphrase: "test123"
@@ -25,3 +27,19 @@ slack_or_mattermost_webhook_url: ""  # put a slack/mattermost webhook URL to ena
 systemd_service_name: "volume-deployer"
 deployer_listen: "0.0.0.0"
 deployer_listen_port: "8015"
+
+#
+# Hooks
+# =====
+#  Allows to execute actions before/after mounting and unmounting
+#
+hook_pre_mount: >
+  echo 'Mounting'
+
+hook_post_mount: ""
+
+hook_pre_unmount: >
+  echo 'Unmounting'
+
+hook_post_unmount: >
+  echo 'Unmounted'

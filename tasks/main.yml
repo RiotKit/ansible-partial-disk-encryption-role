@@ -8,6 +8,9 @@
 - name: Generate scripts
   include: generate-scripts.yml
 
+- name: Create deploy hooks
+  include: create-deploy-hooks.yml
+
 - name: Create a new volume if it was not created yet
   include: create.yml
   when: enc_filesystem_create_if_not_exists == True and storage_file.stat.exists == False
