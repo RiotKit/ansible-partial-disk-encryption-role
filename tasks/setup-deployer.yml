@@ -1,3 +1,9 @@
+- name: Install setuptools for python
+  become: yes
+  apt:
+      name: python3-setuptools
+      state: present
+
 - name: Install via python pip
   become: yes
   pip:
