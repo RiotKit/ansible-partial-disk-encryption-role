@@ -13,7 +13,7 @@
 
 - name: Create a new volume if it was not created yet
   include: create.yml
-  when: enc_filesystem_create_if_not_exists == True and storage_file.stat.exists == False
+  when: enc_filesystem_create_if_not_exists|bool == True and storage_file.stat.exists == False
 
 - name: Mount the volume
   include: mount.yml
