@@ -8,4 +8,5 @@
           - python3-pip
           - expect
           - util-linux
+          - cryptsetup
       state: present
