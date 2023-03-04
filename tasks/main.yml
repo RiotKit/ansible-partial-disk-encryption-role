@@ -2,7 +2,7 @@
   include: dependencies.yml
 
 - name: Identify if the storage was already created
-  stat: path="{{ enc_file }}"
+  shell: "test -f {{enc_file }}"
   register: storage_file
 
 - name: Generate scripts
@@ -13,7 +13,7 @@
 
 - name: Create a new volume if it was not created yet
   include: create.yml
-  when: enc_filesystem_create_if_not_exists|bool == True and storage_file.stat.exists == False
+  when: enc_filesystem_create_if_not_exists|bool == True and storage_file.rc > 0
 
 - name: Mount the volume
   include: mount.yml
